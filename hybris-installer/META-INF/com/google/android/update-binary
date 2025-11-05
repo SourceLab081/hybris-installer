@@ -145,10 +145,6 @@ sed -e "/extraenv/s/^/#/g" -e "/import \/init.\${ro.hardware}.rc/s/^/#/" -e "/ro
     -i $ROOT/init.rc || log "Couldn't fix-up init script!"
 rm $ROOT/init.extraenv.armeabi-v7a.rc
 
-log "Disabling forced encryption in vendor fstab..."
- (umount /vendor &> /dev/null; mount -o rw /vendor && sed "s/fileencryption/encryptable/" -i /vendor/etc/fstab.qcom && sed "s/forceencrypt/encryptable/" -i /vendor/etc/fstab.qcom) || log "Couldn't disable forced encryption!"
-umount /vendor &
-
 if [ "$FORCE_REINSTALL" = "0" ]; then
 	log "Backing up droid-boot image..."
 	dd if=$PARTITION_BOOT of=$ROOT/boot/droid-boot.img bs=4m
